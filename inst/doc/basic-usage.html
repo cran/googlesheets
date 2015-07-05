@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>See some spreadsheets you can access</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<pre><code class="r">library(googlesheets)
+suppressMessages(library(dplyr))
+</code></pre>
+
+<h3>See some spreadsheets you can access</h3>
+
+<p>The <code>gs_ls()</code> function returns the sheets you would see in your Google Sheets home screen: <a href="https://docs.google.com/spreadsheets/">https://docs.google.com/spreadsheets/</a>. This should include sheets that you own and may also show sheets owned by others but that you are permitted to access, if you visited the sheet in the browser. Expect a prompt to authenticate yourself in the browser at this point (more below re: authentication).</p>
+
+<pre><code class="r">(my_sheets &lt;- gs_ls())
+# (expect a prompt to authenticate with Google interactively HERE)
+my_sheets %&gt;% glimpse()
+</code></pre>
+
+<h3>Get a Google spreadsheet to practice with</h3>
+
+<p>Don&#39;t worry if you don&#39;t have any suitable Google Sheets lying around! We&#39;ve published a sheet for you to practice with and have built functions into <code>googlesheets</code> to help you access it. The example sheet holds some of the <a href="https://github.com/jennybc/gapminder">Gapminder data</a>; feel free to <a href="https://w3id.org/people/jennybc/googlesheets_gap_url">visit the Sheet in the browser</a>. The code below will put a copy of this sheet into your Drive, titled &ldquo;Gapminder&rdquo;.</p>
+
+<pre><code class="r">gs_gap() %&gt;% 
+  gs_copy(to = &quot;Gapminder&quot;)
+</code></pre>
+
+<p>If that seems to have worked, go check for a sheet named &ldquo;Gapminder&rdquo; in your Google Sheets home screen: <a href="https://docs.google.com/spreadsheets/">https://docs.google.com/spreadsheets/</a>. You could also run <code>gs_ls()</code> again and make sure the Gapminder sheet is listed.</p>
+
+<h3>Register a spreadsheet</h3>
+
+<p>If you plan to consume data from a sheet or edit it, you must first <strong>register</strong> it. This is how <code>googlesheets</code> records important info about the sheet that is required downstream by the Google Sheets or Google Drive APIs. Once registered, you can print the result to get some basic info about the sheet.</p>
+
+<p><code>googlesheets</code> provides several registration functions. Specifying the sheet by title? Use <code>gs_title()</code>. By key? Use <code>gs_key()</code>. You get the idea.</p>
+
+<p><em>We&#39;re using the built-in functions <code>gs_gap_key()</code> and <code>gs_gap_url()</code> to produce the key and browser URL for the Gapminder example sheet, so you can see how this will play out with your own projects.</em></p>
+
+<pre><code class="r">gap &lt;- gs_title(&quot;Gapminder&quot;)
+gap
+
+# Need to access a sheet you do not own?
+# Access it by key if you know it!
+(GAP_KEY &lt;- gs_gap_key())
+third_party_gap &lt;- GAP_KEY %&gt;%
+  gs_key()
+
+# Need to access a sheet you do not own but you have a sharing link?
+# Access it by URL!
+(GAP_URL &lt;- gs_gap_url())
+third_party_gap &lt;- GAP_URL %&gt;%
+  gs_url()
+# note: registration via URL may not work for &quot;old&quot; sheets
+
+# Worried that a spreadsheet&#39;s registration is out-of-date?
+# Re-register it!
+gap &lt;- gap %&gt;% gs_gs()
+</code></pre>
+
+<p>The registration functions <code>gs_title()</code>, <code>gs_key()</code>, <code>gs_url()</code>, and <code>gs_gs()</code> return a registered sheet as a <code>googlesheet</code> object, which is the first argument to practically every function in this package. Likewise, almost every function returns a freshly registered <code>googlesheet</code> object, ready to be stored or piped into the next command.</p>
+
+<p><em>We export a utility function, <code>extract_key_from_url()</code>, to help you get and store the key from a browser URL. Registering via browser URL is fine, but registering by key is probably a better idea in the long-run.</em></p>
+
+<h3>Consume data</h3>
+
+<h4>Ignorance is bliss</h4>
+
+<p>If you want to consume the data in a worksheet and get something rectangular back, use the all-purpose function <code>gs_read()</code>. By default, it reads all the data in a worksheet.</p>
+
+<pre><code class="r">oceania &lt;- gap %&gt;% gs_read(ws = &quot;Oceania&quot;)
+#&gt; Accessing worksheet titled &quot;Oceania&quot;
+oceania
+#&gt; Source: local data frame [24 x 6]
+#&gt; 
+#&gt;      country continent year lifeExp      pop gdpPercap
+#&gt; 1  Australia   Oceania 1952   69.12  8691212  10039.60
+#&gt; 2  Australia   Oceania 1957   70.33  9712569  10949.65
+#&gt; 3  Australia   Oceania 1962   70.93 10794968  12217.23
+#&gt; 4  Australia   Oceania 1967   71.10 11872264  14526.12
+#&gt; 5  Australia   Oceania 1972   71.93 13177000  16788.63
+#&gt; 6  Australia   Oceania 1977   73.49 14074100  18334.20
+#&gt; 7  Australia   Oceania 1982   74.74 15184200  19477.01
+#&gt; 8  Australia   Oceania 1987   76.32 16257249  21888.89
+#&gt; 9  Australia   Oceania 1992   77.56 17481977  23424.77
+#&gt; 10 Australia   Oceania 1997   78.83 18565243  26997.94
+#&gt; ..       ...       ...  ...     ...      ...       ...
+str(oceania)
+#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    24 obs. of  6 variables:
+#&gt;  $ country  : chr  &quot;Australia&quot; &quot;Australia&quot; &quot;Australia&quot; &quot;Australia&quot; ...
+#&gt;  $ continent: chr  &quot;Oceania&quot; &quot;Oceania&quot; &quot;Oceania&quot; &quot;Oceania&quot; ...
+#&gt;  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+#&gt;  $ lifeExp  : num  69.1 70.3 70.9 71.1 71.9 ...
+#&gt;  $ pop      : int  8691212 9712569 10794968 11872264 13177000 14074100 15184200 16257249 17481977 18565243 ...
+#&gt;  $ gdpPercap: num  10040 10950 12217 14526 16789 ...
+glimpse(oceania)
+#&gt; Observations: 24
+#&gt; Variables:
+#&gt; $ country   (chr) &quot;Australia&quot;, &quot;Australia&quot;, &quot;Australia&quot;, &quot;Australia&quot;, ...
+#&gt; $ continent (chr) &quot;Oceania&quot;, &quot;Oceania&quot;, &quot;Oceania&quot;, &quot;Oceania&quot;, &quot;Oceania...
+#&gt; $ year      (int) 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992...
+#&gt; $ lifeExp   (dbl) 69.120, 70.330, 70.930, 71.100, 71.930, 73.490, 74.7...
+#&gt; $ pop       (int) 8691212, 9712569, 10794968, 11872264, 13177000, 1407...
+#&gt; $ gdpPercap (dbl) 10039.60, 10949.65, 12217.23, 14526.12, 16788.63, 18...
+</code></pre>
+
+<p>You can target specific cells via the <code>range =</code> argument. The simplest usage is to specify an Excel-like cell range, such as range = &ldquo;D12:F15&rdquo; or range = &ldquo;R1C12:R6C15&rdquo;. The cell rectangle can be specified in various other ways, using helper functions.</p>
+
+<pre><code class="r">gap %&gt;% gs_read(ws = 2, range = &quot;A1:D8&quot;)
+#&gt; Accessing worksheet titled &quot;Americas&quot;
+#&gt; Source: local data frame [7 x 4]
+#&gt; 
+#&gt;     country continent year lifeExp
+#&gt; 1 Argentina  Americas 1952  62.485
+#&gt; 2 Argentina  Americas 1957  64.399
+#&gt; 3 Argentina  Americas 1962  65.142
+#&gt; 4 Argentina  Americas 1967  65.634
+#&gt; 5 Argentina  Americas 1972  67.065
+#&gt; 6 Argentina  Americas 1977  68.481
+#&gt; 7 Argentina  Americas 1982  69.942
+gap %&gt;% gs_read(ws = &quot;Europe&quot;, range = cell_rows(1:4))
+#&gt; Accessing worksheet titled &quot;Europe&quot;
+#&gt; Source: local data frame [3 x 6]
+#&gt; 
+#&gt;   country continent year lifeExp     pop gdpPercap
+#&gt; 1 Albania    Europe 1952   55.23 1282697  1601.056
+#&gt; 2 Albania    Europe 1957   59.28 1476505  1942.284
+#&gt; 3 Albania    Europe 1962   64.82 1728137  2312.889
+gap %&gt;% gs_read(ws = &quot;Europe&quot;, range = cell_rows(100:103), col_names = FALSE)
+#&gt; Accessing worksheet titled &quot;Europe&quot;
+#&gt; Source: local data frame [4 x 6]
+#&gt; 
+#&gt;        X1     X2   X3    X4      X5        X6
+#&gt; 1 Finland Europe 1962 68.75 4491443  9371.843
+#&gt; 2 Finland Europe 1967 69.83 4605744 10921.636
+#&gt; 3 Finland Europe 1972 70.87 4639657 14358.876
+#&gt; 4 Finland Europe 1977 72.52 4738902 15605.423
+gap %&gt;% gs_read(ws = &quot;Africa&quot;, range = cell_cols(1:4))
+#&gt; Accessing worksheet titled &quot;Africa&quot;
+#&gt; Source: local data frame [624 x 4]
+#&gt; 
+#&gt;    country continent year lifeExp
+#&gt; 1  Algeria    Africa 1952  43.077
+#&gt; 2  Algeria    Africa 1957  45.685
+#&gt; 3  Algeria    Africa 1962  48.303
+#&gt; 4  Algeria    Africa 1967  51.407
+#&gt; 5  Algeria    Africa 1972  54.518
+#&gt; 6  Algeria    Africa 1977  58.014
+#&gt; 7  Algeria    Africa 1982  61.368
+#&gt; 8  Algeria    Africa 1987  65.799
+#&gt; 9  Algeria    Africa 1992  67.744
+#&gt; 10 Algeria    Africa 1997  69.152
+#&gt; ..     ...       ...  ...     ...
+gap %&gt;% gs_read(ws = &quot;Asia&quot;, range = cell_limits(c(1, 4), c(5, NA)))
+#&gt; Accessing worksheet titled &quot;Asia&quot;
+#&gt; Source: local data frame [4 x 3]
+#&gt; 
+#&gt;   lifeExp      pop gdpPercap
+#&gt; 1  28.801  8425333  779.4453
+#&gt; 2  30.332  9240934  820.8530
+#&gt; 3  31.997 10267083  853.1007
+#&gt; 4  34.020 11537966  836.1971
+</code></pre>
+
+<p><code>gs_read()</code> is a wrapper that bundles together the most common methods to read data from the API and transform it for downstream use. You can refine it&#39;s behavior further, by passing more arguments via <code>...</code>. Read the help file for more details.</p>
+
+<p>If <code>gs_read()</code> doesn&#39;t do what you need, then keep reading for the underlying functions to read and post-process data.</p>
+
+<h4>Specify the consumption method</h4>
+
+<p>There are three ways to consume data from a worksheet within a Google spreadsheet. The order goes from fastest-but-more-limited to slowest-but-most-flexible:</p>
+
+<ul>
+<li><code>gs_read_csv()</code>: Don&#39;t let the name scare you! Nothing is written to file during this process. The name just reflects that, under the hood, we request the data via the &ldquo;exportcsv&rdquo; link. For cases where <code>gs_read_csv()</code> and <code>gs_read_listfeed()</code> both work, we see that <code>gs_read_csv()</code> is around <strong>50 times faster</strong>. Use this when your data occupies a nice rectangle in the sheet and you&#39;re willing to consume all of it. You will get a <code>tbl_df</code> back, which is basically just a <code>data.frame</code>. In fact, you might want to use <code>gs_read_csv()</code>, it in other, less tidy scenarios and do further munging in R.</li>
+<li><code>gs_read_listfeed()</code>: Gets data via the <a href="https://developers.google.com/google-apps/spreadsheets/#working_with_list-based_feeds">&ldquo;list feed&rdquo;</a>, which consumes data row-by-row. Like <code>gs_read_csv()</code>, this is appropriate when your data occupies a nice rectangle. You will again get a <code>tbl_df</code> back, but your variable names may have been mangled (by Google, not us!). Specifically, variable names will be forcefully lowercased and all non-alpha-numeric characters will be removed. Why do we even have this function? The list feed supports some query parameters for sorting and filtering the data, which we plan to support (#17).</li>
+<li><code>gs_read_cellfeed()</code>: Get data via the <a href="https://developers.google.com/google-apps/spreadsheets/#working_with_cell-based_feeds">&ldquo;cell feed&rdquo;</a>, which consumes data cell-by-cell. This is appropriate when you want to consume arbitrary cells, rows, columns, and regions of the sheet. It is invoked by <code>gs_read()</code> whenever the <code>range =</code> argument is used. It works great for modest amounts of data but can be rather slow otherwise. <code>gs_read_cellfeed()</code> returns a <code>tbl_df</code> with <strong>one row per cell</strong>. You can target specific cells via the <code>range</code> argument. See below for demos of <code>gs_reshape_cellfeed()</code> and <code>gs_simplify_cellfeed()</code> which help with post-processing.</li>
+</ul>
+
+<pre><code class="r"># Get the data for worksheet &quot;Oceania&quot;: the super-fast csv way
+oceania_csv &lt;- gap %&gt;% gs_read_csv(ws = &quot;Oceania&quot;)
+#&gt; Accessing worksheet titled &quot;Oceania&quot;
+str(oceania_csv)
+#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    24 obs. of  6 variables:
+#&gt;  $ country  : chr  &quot;Australia&quot; &quot;Australia&quot; &quot;Australia&quot; &quot;Australia&quot; ...
+#&gt;  $ continent: chr  &quot;Oceania&quot; &quot;Oceania&quot; &quot;Oceania&quot; &quot;Oceania&quot; ...
+#&gt;  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+#&gt;  $ lifeExp  : num  69.1 70.3 70.9 71.1 71.9 ...
+#&gt;  $ pop      : int  8691212 9712569 10794968 11872264 13177000 14074100 15184200 16257249 17481977 18565243 ...
+#&gt;  $ gdpPercap: num  10040 10950 12217 14526 16789 ...
+oceania_csv
+#&gt; Source: local data frame [24 x 6]
+#&gt; 
+#&gt;      country continent year lifeExp      pop gdpPercap
+#&gt; 1  Australia   Oceania 1952   69.12  8691212  10039.60
+#&gt; 2  Australia   Oceania 1957   70.33  9712569  10949.65
+#&gt; 3  Australia   Oceania 1962   70.93 10794968  12217.23
+#&gt; 4  Australia   Oceania 1967   71.10 11872264  14526.12
+#&gt; 5  Australia   Oceania 1972   71.93 13177000  16788.63
+#&gt; 6  Australia   Oceania 1977   73.49 14074100  18334.20
+#&gt; 7  Australia   Oceania 1982   74.74 15184200  19477.01
+#&gt; 8  Australia   Oceania 1987   76.32 16257249  21888.89
+#&gt; 9  Australia   Oceania 1992   77.56 17481977  23424.77
+#&gt; 10 Australia   Oceania 1997   78.83 18565243  26997.94
+#&gt; ..       ...       ...  ...     ...      ...       ...
+
+# Get the data for worksheet &quot;Oceania&quot;: the less-fast tabular way (&quot;list feed&quot;)
+oceania_list_feed &lt;- gap %&gt;% gs_read_listfeed(ws = &quot;Oceania&quot;) 
+#&gt; Accessing worksheet titled &quot;Oceania&quot;
+str(oceania_list_feed)
+#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    24 obs. of  6 variables:
+#&gt;  $ country  : chr  &quot;Australia&quot; &quot;Australia&quot; &quot;Australia&quot; &quot;Australia&quot; ...
+#&gt;  $ continent: chr  &quot;Oceania&quot; &quot;Oceania&quot; &quot;Oceania&quot; &quot;Oceania&quot; ...
+#&gt;  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+#&gt;  $ lifeexp  : num  69.1 70.3 70.9 71.1 71.9 ...
+#&gt;  $ pop      : int  8691212 9712569 10794968 11872264 13177000 14074100 15184200 16257249 17481977 18565243 ...
+#&gt;  $ gdppercap: num  10040 10950 12217 14526 16789 ...
+oceania_list_feed
+#&gt; Source: local data frame [24 x 6]
+#&gt; 
+#&gt;      country continent year lifeexp      pop gdppercap
+#&gt; 1  Australia   Oceania 1952   69.12  8691212  10039.60
+#&gt; 2  Australia   Oceania 1957   70.33  9712569  10949.65
+#&gt; 3  Australia   Oceania 1962   70.93 10794968  12217.23
+#&gt; 4  Australia   Oceania 1967   71.10 11872264  14526.12
+#&gt; 5  Australia   Oceania 1972   71.93 13177000  16788.63
+#&gt; 6  Australia   Oceania 1977   73.49 14074100  18334.20
+#&gt; 7  Australia   Oceania 1982   74.74 15184200  19477.01
+#&gt; 8  Australia   Oceania 1987   76.32 16257249  21888.89
+#&gt; 9  Australia   Oceania 1992   77.56 17481977  23424.77
+#&gt; 10 Australia   Oceania 1997   78.83 18565243  26997.94
+#&gt; ..       ...       ...  ...     ...      ...       ...
+
+# Get the data for worksheet &quot;Oceania&quot;: the slow cell-by-cell way (&quot;cell feed&quot;)
+oceania_cell_feed &lt;- gap %&gt;% gs_read_cellfeed(ws = &quot;Oceania&quot;) 
+#&gt; Accessing worksheet titled &quot;Oceania&quot;
+str(oceania_cell_feed)
+#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    150 obs. of  5 variables:
+#&gt;  $ cell     : chr  &quot;A1&quot; &quot;B1&quot; &quot;C1&quot; &quot;D1&quot; ...
+#&gt;  $ cell_alt : chr  &quot;R1C1&quot; &quot;R1C2&quot; &quot;R1C3&quot; &quot;R1C4&quot; ...
+#&gt;  $ row      : int  1 1 1 1 1 1 2 2 2 2 ...
+#&gt;  $ col      : int  1 2 3 4 5 6 1 2 3 4 ...
+#&gt;  $ cell_text: chr  &quot;country&quot; &quot;continent&quot; &quot;year&quot; &quot;lifeExp&quot; ...
+#&gt;  - attr(*, &quot;ws_title&quot;)= chr &quot;Oceania&quot;
+oceania_cell_feed
+#&gt; Source: local data frame [150 x 5]
+#&gt; 
+#&gt;    cell cell_alt row col cell_text
+#&gt; 1    A1     R1C1   1   1   country
+#&gt; 2    B1     R1C2   1   2 continent
+#&gt; 3    C1     R1C3   1   3      year
+#&gt; 4    D1     R1C4   1   4   lifeExp
+#&gt; 5    E1     R1C5   1   5       pop
+#&gt; 6    F1     R1C6   1   6 gdpPercap
+#&gt; 7    A2     R2C1   2   1 Australia
+#&gt; 8    B2     R2C2   2   2   Oceania
+#&gt; 9    C2     R2C3   2   3      1952
+#&gt; 10   D2     R2C4   2   4     69.12
+#&gt; ..  ...      ... ... ...       ...
+</code></pre>
+
+<h4>Quick speed comparison</h4>
+
+<p>Let&#39;s consume all the data for Africa by all 3 methods and see how long it takes.</p>
+
+<pre><code class="r">jfun &lt;- function(readfun)
+  system.time(do.call(readfun, list(gs_gap(), ws = &quot;Africa&quot;, verbose = FALSE)))
+readfuns &lt;- c(&quot;gs_read_csv&quot;, &quot;gs_read_listfeed&quot;, &quot;gs_read_cellfeed&quot;)
+readfuns &lt;- sapply(readfuns, get, USE.NAMES = TRUE)
+sapply(readfuns, jfun)
+#&gt;            gs_read_csv gs_read_listfeed gs_read_cellfeed
+#&gt; user.self        0.030            0.141            1.057
+#&gt; sys.self         0.001            0.017            0.040
+#&gt; elapsed          1.737            1.761            3.104
+#&gt; user.child       0.000            0.000            0.000
+#&gt; sys.child        0.000            0.000            0.000
+</code></pre>
+
+<h4>Post-processing data from the cell feed</h4>
+
+<p>If you consume data from the cell feed with <code>gs_read_cellfeed(..., range = ...)</code>, you get a data.frame back with <strong>one row per cell</strong>. The package offers two functions to post-process this into something more useful, <code>gs_reshape_cellfeed()</code> and <code>gs_simplify_cellfeed()</code>.</p>
+
+<p>To reshape into a table, use <code>gs_reshape_cellfeed()</code>. You can signal that the first row contains column names (or not) with <code>col_names = TRUE</code> (or <code>FALSE</code>). Or you can provide a character vector of names. This is inspired by the <code>col_names</code> argument of <code>readxl::read_excel()</code> and <code>readr::read_delim()</code>, which generalizes the <code>header</code> argument of <code>read.table()</code>.</p>
+
+<pre><code class="r"># Reshape: instead of one row per cell, make a nice rectangular data.frame
+australia_cell_feed &lt;- gap %&gt;%
+  gs_read_cellfeed(ws = &quot;Oceania&quot;, range = &quot;A1:F13&quot;) 
+#&gt; Accessing worksheet titled &quot;Oceania&quot;
+str(australia_cell_feed)
+#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    78 obs. of  5 variables:
+#&gt;  $ cell     : chr  &quot;A1&quot; &quot;B1&quot; &quot;C1&quot; &quot;D1&quot; ...
+#&gt;  $ cell_alt : chr  &quot;R1C1&quot; &quot;R1C2&quot; &quot;R1C3&quot; &quot;R1C4&quot; ...
+#&gt;  $ row      : int  1 1 1 1 1 1 2 2 2 2 ...
+#&gt;  $ col      : int  1 2 3 4 5 6 1 2 3 4 ...
+#&gt;  $ cell_text: chr  &quot;country&quot; &quot;continent&quot; &quot;year&quot; &quot;lifeExp&quot; ...
+#&gt;  - attr(*, &quot;ws_title&quot;)= chr &quot;Oceania&quot;
+oceania_cell_feed
+#&gt; Source: local data frame [150 x 5]
+#&gt; 
+#&gt;    cell cell_alt row col cell_text
+#&gt; 1    A1     R1C1   1   1   country
+#&gt; 2    B1     R1C2   1   2 continent
+#&gt; 3    C1     R1C3   1   3      year
+#&gt; 4    D1     R1C4   1   4   lifeExp
+#&gt; 5    E1     R1C5   1   5       pop
+#&gt; 6    F1     R1C6   1   6 gdpPercap
+#&gt; 7    A2     R2C1   2   1 Australia
+#&gt; 8    B2     R2C2   2   2   Oceania
+#&gt; 9    C2     R2C3   2   3      1952
+#&gt; 10   D2     R2C4   2   4     69.12
+#&gt; ..  ...      ... ... ...       ...
+australia_reshaped &lt;- australia_cell_feed %&gt;% gs_reshape_cellfeed()
+str(australia_reshaped)
+#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    12 obs. of  6 variables:
+#&gt;  $ country  : chr  &quot;Australia&quot; &quot;Australia&quot; &quot;Australia&quot; &quot;Australia&quot; ...
+#&gt;  $ continent: chr  &quot;Oceania&quot; &quot;Oceania&quot; &quot;Oceania&quot; &quot;Oceania&quot; ...
+#&gt;  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+#&gt;  $ lifeExp  : num  69.1 70.3 70.9 71.1 71.9 ...
+#&gt;  $ pop      : int  8691212 9712569 10794968 11872264 13177000 14074100 15184200 16257249 17481977 18565243 ...
+#&gt;  $ gdpPercap: num  10040 10950 12217 14526 16789 ...
+australia_reshaped
+#&gt; Source: local data frame [12 x 6]
+#&gt; 
+#&gt;      country continent year lifeExp      pop gdpPercap
+#&gt; 1  Australia   Oceania 1952  69.120  8691212  10039.60
+#&gt; 2  Australia   Oceania 1957  70.330  9712569  10949.65
+#&gt; 3  Australia   Oceania 1962  70.930 10794968  12217.23
+#&gt; 4  Australia   Oceania 1967  71.100 11872264  14526.12
+#&gt; 5  Australia   Oceania 1972  71.930 13177000  16788.63
+#&gt; 6  Australia   Oceania 1977  73.490 14074100  18334.20
+#&gt; 7  Australia   Oceania 1982  74.740 15184200  19477.01
+#&gt; 8  Australia   Oceania 1987  76.320 16257249  21888.89
+#&gt; 9  Australia   Oceania 1992  77.560 17481977  23424.77
+#&gt; 10 Australia   Oceania 1997  78.830 18565243  26997.94
+#&gt; 11 Australia   Oceania 2002  80.370 19546792  30687.75
+#&gt; 12 Australia   Oceania 2007  81.235 20434176  34435.37
+
+# Example: first 3 rows
+gap_3rows &lt;- gap %&gt;% gs_read_cellfeed(&quot;Europe&quot;, range = cell_rows(1:3))
+#&gt; Accessing worksheet titled &quot;Europe&quot;
+gap_3rows %&gt;% head()
+#&gt; Source: local data frame [6 x 5]
+#&gt; 
+#&gt;   cell cell_alt row col cell_text
+#&gt; 1   A1     R1C1   1   1   country
+#&gt; 2   B1     R1C2   1   2 continent
+#&gt; 3   C1     R1C3   1   3      year
+#&gt; 4   D1     R1C4   1   4   lifeExp
+#&gt; 5   E1     R1C5   1   5       pop
+#&gt; 6   F1     R1C6   1   6 gdpPercap
+
+# convert to a data.frame (by default, column names found in first row)
+gap_3rows %&gt;% gs_reshape_cellfeed()
+#&gt; Source: local data frame [2 x 6]
+#&gt; 
+#&gt;   country continent year lifeExp     pop gdpPercap
+#&gt; 1 Albania    Europe 1952   55.23 1282697  1601.056
+#&gt; 2 Albania    Europe 1957   59.28 1476505  1942.284
+
+# arbitrary cell range, column names no longer available in first row
+gap %&gt;%
+  gs_read_cellfeed(&quot;Oceania&quot;, range = &quot;D12:F15&quot;) %&gt;%
+  gs_reshape_cellfeed(col_names = FALSE)
+#&gt; Accessing worksheet titled &quot;Oceania&quot;
+#&gt; Source: local data frame [4 x 3]
+#&gt; 
+#&gt;       X4       X5       X6
+#&gt; 1 80.370 19546792 30687.75
+#&gt; 2 81.235 20434176 34435.37
+#&gt; 3 69.390  1994794 10556.58
+#&gt; 4 70.260  2229407 12247.40
+
+# arbitrary cell range, direct specification of column names
+gap %&gt;%
+  gs_read_cellfeed(&quot;Oceania&quot;, range = cell_limits(c(2, 1), c(5, 3))) %&gt;%
+  gs_reshape_cellfeed(col_names = paste(&quot;thing&quot;, c(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;),
+                                        sep = &quot;_&quot;))
+#&gt; Accessing worksheet titled &quot;Oceania&quot;
+#&gt; Source: local data frame [4 x 3]
+#&gt; 
+#&gt;   thing_one thing_two thing_three
+#&gt; 1 Australia   Oceania        1952
+#&gt; 2 Australia   Oceania        1957
+#&gt; 3 Australia   Oceania        1962
+#&gt; 4 Australia   Oceania        1967
+</code></pre>
+
+<p>To extract the cell data into an atomic vector, possibly named, use <code>gs_simplify_cellfeed()</code>. You can signal that the first row contains column names (or not) with <code>col_names = TRUE</code> (or <code>FALSE</code>). There are several arguments to control conversion.</p>
+
+<pre><code class="r"># Example: first row only
+gap_1row &lt;- gap %&gt;% gs_read_cellfeed(&quot;Europe&quot;, range = cell_rows(1))
+#&gt; Accessing worksheet titled &quot;Europe&quot;
+gap_1row
+#&gt; Source: local data frame [6 x 5]
+#&gt; 
+#&gt;   cell cell_alt row col cell_text
+#&gt; 1   A1     R1C1   1   1   country
+#&gt; 2   B1     R1C2   1   2 continent
+#&gt; 3   C1     R1C3   1   3      year
+#&gt; 4   D1     R1C4   1   4   lifeExp
+#&gt; 5   E1     R1C5   1   5       pop
+#&gt; 6   F1     R1C6   1   6 gdpPercap
+
+# convert to a named character vector
+gap_1row %&gt;% gs_simplify_cellfeed()
+#&gt;          A1          B1          C1          D1          E1          F1 
+#&gt;   &quot;country&quot; &quot;continent&quot;      &quot;year&quot;   &quot;lifeExp&quot;       &quot;pop&quot; &quot;gdpPercap&quot;
+
+# Example: single column
+gap_1col &lt;- gap %&gt;% gs_read_cellfeed(&quot;Europe&quot;, range = cell_cols(3))
+#&gt; Accessing worksheet titled &quot;Europe&quot;
+gap_1col
+#&gt; Source: local data frame [361 x 5]
+#&gt; 
+#&gt;    cell cell_alt row col cell_text
+#&gt; 1    C1     R1C3   1   3      year
+#&gt; 2    C2     R2C3   2   3      1952
+#&gt; 3    C3     R3C3   3   3      1957
+#&gt; 4    C4     R4C3   4   3      1962
+#&gt; 5    C5     R5C3   5   3      1967
+#&gt; 6    C6     R6C3   6   3      1972
+#&gt; 7    C7     R7C3   7   3      1977
+#&gt; 8    C8     R8C3   8   3      1982
+#&gt; 9    C9     R9C3   9   3      1987
+#&gt; 10  C10    R10C3  10   3      1992
+#&gt; ..  ...      ... ... ...       ...
+
+# convert to a un-named character vector and drop the variable name
+gap_1col %&gt;% gs_simplify_cellfeed(notation = &quot;none&quot;, col_names = TRUE)
+#&gt;   [1] &quot;year&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot;
+#&gt;  [11] &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot;
+#&gt;  [21] &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot;
+#&gt;  [31] &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot;
+#&gt;  [41] &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot;
+#&gt;  [51] &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot;
+#&gt;  [61] &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot;
+#&gt;  [71] &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot;
+#&gt;  [81] &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot;
+#&gt;  [91] &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot;
+#&gt; [101] &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot;
+#&gt; [111] &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot;
+#&gt; [121] &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot;
+#&gt; [131] &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot;
+#&gt; [141] &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot;
+#&gt; [151] &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot;
+#&gt; [161] &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot;
+#&gt; [171] &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot;
+#&gt; [181] &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot;
+#&gt; [191] &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot;
+#&gt; [201] &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot;
+#&gt; [211] &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot;
+#&gt; [221] &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot;
+#&gt; [231] &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot;
+#&gt; [241] &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot;
+#&gt; [251] &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot;
+#&gt; [261] &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot;
+#&gt; [271] &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot;
+#&gt; [281] &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot;
+#&gt; [291] &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot;
+#&gt; [301] &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot;
+#&gt; [311] &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot;
+#&gt; [321] &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot;
+#&gt; [331] &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot; &quot;1957&quot; &quot;1962&quot;
+#&gt; [341] &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot; &quot;2007&quot; &quot;1952&quot;
+#&gt; [351] &quot;1957&quot; &quot;1962&quot; &quot;1967&quot; &quot;1972&quot; &quot;1977&quot; &quot;1982&quot; &quot;1987&quot; &quot;1992&quot; &quot;1997&quot; &quot;2002&quot;
+#&gt; [361] &quot;2007&quot;
+</code></pre>
+
+<h3>Create sheets</h3>
+
+<p>You can use <code>googlesheets</code> to create new spreadsheets.</p>
+
+<pre><code class="r">foo &lt;- gs_new(&quot;foo&quot;)
+foo
+</code></pre>
+
+<p>By default, there will be an empty worksheet called &ldquo;Sheet1&rdquo;, but you can control it&#39;s title, extent, and initial data with additional arguments to <code>gs_new()</code> (see <code>gs_edit_cells()</code> in the next section). You can also add, rename, and delete worksheets within an existing sheet via <code>gs_ws_new()</code>, <code>gs_ws_rename()</code>, and <code>gs_ws_delete()</code>. Copy an entire spreadsheet with <code>gs_copy()</code>.</p>
+
+<h3>Edit cells</h3>
+
+<p>There are two ways to edit cells within an existing worksheet of an existing spreadsheet:</p>
+
+<ul>
+<li><code>gs_edit_cells()</code> can write into an arbitrary cell rectangle</li>
+<li><code>gs_add_row()</code> can add a new row to the bottom of an existing cell rectangle</li>
+</ul>
+
+<p>If you have the choice, <code>gs_add_row()</code> is faster, but it can only be used when your data occupies a very neat rectangle in the upper left corner of the sheet. It relies on the <a href="https://developers.google.com/google-apps/spreadsheets/#working_with_list-based_feeds">list feed</a>. <code>gs_edit_cells()</code> relies on <a href="https://developers.google.com/google-apps/spreadsheets/#updating_multiple_cells_with_a_batch_request">batch editing</a> on the <a href="https://developers.google.com/google-apps/spreadsheets/#working_with_cell-based_feeds">cell feed</a>.</p>
+
+<p>We&#39;ll work within the completely empty sheet created above, <code>foo</code>. If your edit populates the sheet with everything it should have, set <code>trim = TRUE</code> and we will resize the sheet to match the data. Then the nominal worksheet extent is much more informative (vs. the default of 1000 rows and 26 columns) and any future consumption via the cell feed will be much faster.</p>
+
+<pre><code class="r">## foo &lt;- gs_new(&quot;foo&quot;)
+## initialize the worksheets
+foo &lt;- foo %&gt;% gs_ws_new(&quot;edit_cells&quot;)
+foo &lt;- foo %&gt;% gs_ws_new(&quot;add_row&quot;)
+
+## add first six rows of iris data (and var names) into a blank sheet
+foo &lt;- foo %&gt;%
+  gs_edit_cells(ws = &quot;edit_cells&quot;, input = head(iris), trim = TRUE)
+
+## initialize sheet with column headers and one row of data
+## the list feed is picky about this
+foo &lt;- foo %&gt;% 
+  gs_edit_cells(ws = &quot;add_row&quot;, input = head(iris, 1), trim = TRUE)
+## add the next 5 rows of data ... careful not to go too fast
+for(i in 2:6) {
+  foo &lt;- foo %&gt;% gs_add_row(ws = &quot;add_row&quot;, input = iris[i, ])
+  Sys.sleep(0.3)
+}
+
+## let&#39;s inspect out work
+foo %&gt;% gs_read(ws = &quot;edit_cells&quot;)
+foo %&gt;% gs_read(ws = &quot;add_row&quot;)
+</code></pre>
+
+<p>Go to <a href="https://docs.google.com/spreadsheets/u/0/">your Google Sheets home screen</a>, find the new sheet <code>foo</code> and look at it. You should see some iris data in the worksheets named <code>edit_cells</code> and <code>add_row</code>.</p>
+
+<p>Note how we always store the returned value from <code>gs_edit_cells()</code> (and all other sheet editing functions). That&#39;s because the registration info changes whenever we edit the sheet and we re-register it inside these functions, so this idiom will help you make sequential edits and queries to the same sheet.</p>
+
+<p>Read the function documentation for <code>gs_edit_cells()</code> for how to specify where the data goes, via an anchor cell, and in which direction, via the shape of the input or the <code>byrow =</code> argument.</p>
+
+<h3>Delete sheets</h3>
+
+<p>Let&#39;s clean up by deleting the <code>foo</code> spreadsheet we&#39;ve been playing with.</p>
+
+<pre><code class="r">gs_delete(foo)
+</code></pre>
+
+<p>If you&#39;d rather specify sheets for deletion by title, look at <code>gs_grepdel()</code> and <code>gs_vecdel()</code>. These functions also allow the deletion of multiple sheets at once.</p>
+
+<h3>Upload delimited files or Excel workbooks</h3>
+
+<p>Here&#39;s how we can create a new spreadsheet from a suitable local file. First, we&#39;ll write then upload a comma-delimited excerpt from the iris data.</p>
+
+<pre><code class="r">iris %&gt;%
+  head(5) %&gt;%
+  write.csv(&quot;iris.csv&quot;, row.names = FALSE)
+iris_ss &lt;- gs_upload(&quot;iris.csv&quot;)
+iris_ss
+iris_ss %&gt;% gs_read()
+file.remove(&quot;iris.csv&quot;)
+</code></pre>
+
+<p>Now we&#39;ll upload a multi-sheet Excel workbook. Slowly.</p>
+
+<pre><code class="r">gap_xlsx &lt;- gs_upload(system.file(&quot;mini-gap.xlsx&quot;, package = &quot;googlesheets&quot;))
+gap_xlsx
+gap_xlsx %&gt;% gs_read(ws = &quot;Asia&quot;)
+</code></pre>
+
+<p>And we clean up after ourselves on Google Drive.</p>
+
+<pre><code class="r">gs_vecdel(c(&quot;iris&quot;, &quot;mini-gap&quot;))
+## achieves same as:
+## gs_delete(iris_ss)
+## gs_delete(gap_xlsx)
+</code></pre>
+
+<h3>Download sheets as csv, pdf, or xlsx file</h3>
+
+<p>You can download a Google Sheet as a csv, pdf, or xlsx file. Downloading the spreadsheet as a csv file will export the first worksheet (default) unless another worksheet is specified.</p>
+
+<pre><code class="r">gs_title(&quot;Gapminder&quot;) %&gt;%
+  gs_download(ws = &quot;Africa&quot;, to = &quot;gapminder-africa.csv&quot;)
+## is it there? yes!
+read.csv(&quot;gapminder-africa.csv&quot;) %&gt;% head()
+</code></pre>
+
+<p>Download the entire spreadsheet as an Excel workbook.</p>
+
+<pre><code class="r">gs_title(&quot;Gapminder&quot;) %&gt;% 
+  gs_download(to = &quot;gapminder.xlsx&quot;)
+</code></pre>
+
+<p>Go check it out in Excel, if you wish!</p>
+
+<p>And now we clean up the downloaded files.</p>
+
+<pre><code class="r">file.remove(c(&quot;gapminder.xlsx&quot;, &quot;gapminder-africa.csv&quot;))
+</code></pre>
+
+<h3>Authorization using OAuth2</h3>
+
+<p>If you use a function that requires authentication, it will be auto-triggered. But you can also initiate the process explicitly if you wish, like so:</p>
+
+<pre><code class="r"># Give googlesheets permission to access your spreadsheets and google drive
+gs_auth() 
+</code></pre>
+
+<p>Use <code>gs_auth(new_user = TRUE)</code>, to force the process to begin anew. Otherwise, the credentials left behind will be used to refresh your access token as needed.</p>
+
+<p>The function <code>gs_user()</code> will print and return some information about the current authenticated user and session.</p>
+
+<pre><code class="r">user_session_info &lt;- gs_user()
+#&gt; No authorization yet in this session!
+#&gt; NOTE: a .httr-oauth file exists in current working directory.
+#&gt;  Run gs_auth() to use the credentials cached in .httr-oauth for this session.
+#&gt; No user currently authorized.
+user_session_info
+#&gt; NULL
+</code></pre>
+
+<h3>&ldquo;Old&rdquo; Google Sheets</h3>
+
+<p>In March 2014 <a href="https://support.google.com/docs/answer/3541068?hl=en">Google introduced &ldquo;new&rdquo; Sheets</a>. &ldquo;New&rdquo; Sheets and &ldquo;old&rdquo; sheets behave quite differently with respect to access via API and present a big headache for us. Recently, we&#39;ve noted that Google is forcibly converting sheets: <a href="https://support.google.com/docs/answer/6082736?p=new_sheets_migrate&amp;rd=1">all &ldquo;old&rdquo; Sheets will be switched over the &ldquo;new&rdquo; sheets during 2015</a>. However there are still &ldquo;old&rdquo; sheets lying around, so we&#39;ve made some effort to support them, when it&#39;s easy to do so. But keep your expectations low.</p>
+
+<p>In particular, <code>gs_read_csv()</code> does not currently work for &ldquo;old&rdquo; sheets.</p>
+
+</body>
+
+</html>
