@@ -31,17 +31,13 @@
 #' @keywords internal
 gs_perm_ls <- function(ss, filter = NULL) {
 
-  the_url <- paste("https://www.googleapis.com/drive/v2/files", ss$sheet_key,
-                   "permissions", sep = "/")
+  url <- file.path(.state$gd_base_url_files_v2, ss$sheet_key, "permissions")
+  req <- httr::GET(url, google_token()) %>%
+    httr::stop_for_status()
+  req <- content_as_json_UTF8(req)
 
-  req <- gdrive_GET(the_url)
-
-  ## the additionRoles field, if present, will be a list of length one :(
-  jfun <- function(x) lapply(x, function(y) if(is.list(y)) y[[1]] else y)
-  perm_tbl <- req$content$items %>%
-    lapply(jfun) %>%
-    lapply(dplyr::as_data_frame) %>%
-    dplyr::bind_rows() %>%
+  perm_tbl <- req$items %>%
+    dplyr::as.tbl() %>%
     dplyr::rename_(email = ~ emailAddress, perm_id = ~ id)
 
   if(!is.null(filter)) {
@@ -51,7 +47,7 @@ gs_perm_ls <- function(ss, filter = NULL) {
     if(any(ind)) {
       perm_tbl <- perm_tbl[ind, ]
     } else {
-      stop(sprintf("No matching permissions found: %s", filter))
+      spf("No matching permissions found: %s", filter)
     }
   }
 
@@ -114,15 +110,17 @@ gs_perm_add <- function(ss, email = NULL,
     comm <- NULL
   }
 
-  req <- gdrive_POST(the_url, query = query,
-                     body = list("value" = email,
-                                 "type" = type,
-                                 "role" = role,
-                                 "withLink" = with_link,
-                                 "additionalRoles" = comm))
+  req <- httr::POST(the_url, google_token(), encode = "json",
+                    query = query,
+                    body = list("value" = email,
+                                "type" = type,
+                                "role" = role,
+                                "withLink" = with_link,
+                                "additionalRoles" = comm))
+  httr::stop_for_status(req)
+  rc <- content_as_json_UTF8(req)
 
-  new_perm_id <- req %>% httr::content() %>% '[['("id")
-  perm <- ss %>% gs_perm_ls(filter = new_perm_id)
+  perm <- ss %>% gs_perm_ls(filter = rc$id)
 
   if(perm$type == "anyone") {
     who <- perm$type
@@ -134,9 +132,8 @@ gs_perm_add <- function(ss, email = NULL,
     }
   }
 
-  if(req$status_code == 200 && verbose) {
-    message(sprintf("Success. New Permission added for \"%s\" as a %s.",
-                    who, perm$role))
+  if(httr::status_code(req) == 200 && verbose) {
+    mpf("Success. New Permission added for \"%s\" as a %s.", who, perm$role)
   }
 
   invisible(perm)
@@ -192,10 +189,11 @@ gs_perm_edit <- function(ss, email = NULL, perm_id = NULL,
   }
 
   # updates a permission
-  req <- gdrive_PUT(perm$selfLink,
-                    body = list("role" = role,
-                                "additionalRoles" = comm),
-                    encode = "json")
+  req <- httr::PUT(perm$selfLink, google_token(),
+                   body = list("role" = role,
+                               "additionalRoles" = comm),
+                   encode = "json") %>%
+    httr::stop_for_status()
 
   if(verbose) {
     if(is.na(perm$email) && perm$type == "anyone") {
@@ -204,8 +202,8 @@ gs_perm_edit <- function(ss, email = NULL, perm_id = NULL,
       who <- perm$email
     }
     if(req$status_code == 200) {
-      message(sprintf("Success. Permission updated for %s from %s to %s.",
-                      who, perm$role, role))
+      mpf("Success. Permission updated for %s from %s to %s.",
+          who, perm$role, role)
     }
   }
 
@@ -243,9 +241,9 @@ gs_perm_delete <- function(ss, email = NULL, perm_id = NULL, verbose = TRUE) {
   } else {
     perm <- gs_perm_ls(ss, email)
   }
-  the_url <- perm$selfLink
 
-  gsheets_DELETE(the_url)
+  req <- httr::DELETE(perm$selfLink, google_token()) %>%
+    httr::stop_for_status()
 
   status <- !(perm$perm_id %in% gs_perm_ls(ss)$perm_id)
 

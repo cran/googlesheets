@@ -1,4 +1,4 @@
-context("suspend authentication")
+context("suspend authorization")
 
 ## remove the google token, to make 100% sure the remaining tests run w/o auth
 
@@ -7,11 +7,11 @@ context("suspend authentication")
 
 ## this filename is deliberate w/r/t alphabetical order, so don't change it
 ## lightly! it's no coincidence that "axe" starts with "A"
-gs_auth_suspend(verbose = FALSE)
+suppressMessages(gs_deauth(verbose = FALSE))
 
-test_that("Token does NOT exist, no .httr-oauth file in wd", {
+test_that("Token is NOT available, no .httr-oauth file in wd", {
 
-  expect_false(token_exists())
+  expect_false(token_available())
   expect_false(file.exists(".httr-oauth"))
 
 })

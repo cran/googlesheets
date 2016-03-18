@@ -1,6 +1,6 @@
 context("list sheets")
 
-suppressMessages(gs_auth(token = "googlesheets_token.rds", verbose = FALSE))
+activate_test_token()
 
 test_that("Spreadsheets visible to authenticated user can be listed", {
 
@@ -36,4 +36,4 @@ test_that("Regexes work for limiting sheet listing", {
 
 })
 
-gs_auth_suspend(verbose = FALSE)
+gs_deauth(verbose = FALSE)

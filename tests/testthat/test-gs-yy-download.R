@@ -1,23 +1,18 @@
 context("download sheets")
 
-## this function requires authorization absolutely
-suppressMessages(gs_auth(token = "googlesheets_token.rds", verbose = FALSE))
-
 test_that("Spreadsheet can be exported", {
-
-  ss <- gs_ws_feed(GAP_WS_FEED, lookup = FALSE)
 
   temp_dir <- tempdir()
 
   # bad format
-  expect_error(gs_download(ss, to = "pts.txt"),
+  expect_error(gs_download(gs_mini_gap(), to = "pts.txt"),
                "Cannot download Google spreadsheet as this format")
 
   # good formats
   fmts <- c("xlsx", "pdf", "csv")
   to_files <- file.path(temp_dir, paste0("oceania.", fmts))
   for(to in to_files) {
-    expect_message(ss %>%
+    expect_message(gs_mini_gap() %>%
                      gs_download(ws = "Oceania", to = to, overwrite = TRUE),
                    "successfully downloaded")
   }
@@ -29,21 +24,42 @@ test_that("Spreadsheet can be exported", {
 
 test_that("Spreadsheet can be exported w/o specifying the worksheet", {
 
-  ss <- gs_ws_feed(GAP_WS_FEED, lookup = FALSE)
-
   temp_dir <- tempdir()
 
-  to <- file.path(temp_dir, "sheet_one.csv")
-  expect_message(ss %>% gs_download(to = to, overwrite = TRUE),
+  to_nominal <- file.path(temp_dir, "sheet_one.csv")
+  expect_message(to_actual <-
+                   gs_mini_gap() %>%
+                   gs_download(to = to_nominal, overwrite = TRUE),
                  "successfully downloaded")
 
-  expect_true(file.exists(to))
-  expect_true(file.remove(to))
+  expect_true(file.exists(to_actual))
+  expect_true(identical(normalizePath(to_nominal), normalizePath(to_actual)))
+  expect_true(file.remove(to_actual))
 
+})
+
+test_that("Spreadsheet can be exported w/o specifying 'to'", {
+
+  mg <- gs_mini_gap()
+  expect_message(to_actual <-
+                   gs_mini_gap() %>%
+                   gs_download(overwrite = TRUE),
+                 "successfully downloaded")
+
+  expect_true(file.exists(to_actual))
+  expect_match(basename(to_actual), paste(mg$sheet_title, "xlsx", sep = "."))
+  expect_true(file.remove(to_actual))
 })
 
 
 test_that("Old Sheets can be exported", {
+
+  ## 2016-03-15
+  ## decommissioning this
+  ## I haven't seen an old sheet in a long time
+  ## if this gets re-activated, note check_old_sheet() currently requires auth
+  ## move it out of here or re-write check_old_sheet()
+  skip("skipping a test re: \"old\" sheets")
 
   ## don't even bother if we can't see this sheet in the spreadsheets feed or if
   ## it's been "helpfully" converted to a new sheet by google AGAIN :(
@@ -75,5 +91,3 @@ test_that("Old Sheets can be exported", {
   expect_true(all(file.remove(file.path(temp_dir, c("old.xlsx", "old.pdf")))))
 
 })
-
-gs_auth_suspend(verbose = FALSE)
