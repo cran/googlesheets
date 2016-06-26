@@ -1,4 +1,14 @@
 
+-   [Google Sheets R API](#google-sheets-r-api)
+    -   [Install googlesheets](#install-googlesheets)
+    -   [Vignettes](#vignettes)
+    -   [Talks](#talks)
+    -   [Load googlesheets](#load-googlesheets)
+    -   [Function naming convention](#function-naming-convention)
+    -   [Quick demo](#quick-demo)
+    -   [Overview of functions](#overview-of-functions)
+    -   [What the hell do I do with this?](#what-the-hell-do-i-do-with-this)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 [![Build Status](https://travis-ci.org/jennybc/googlesheets.svg?branch=master)](https://travis-ci.org/jennybc/googlesheets) [![Coverage Status](https://coveralls.io/repos/jennybc/googlesheets/badge.svg)](https://coveralls.io/r/jennybc/googlesheets) [![DOI](https://zenodo.org/badge/16122/jennybc/googlesheets.svg)](http://dx.doi.org/10.5281/zenodo.21972) [![CRAN version](http://www.r-pkg.org/badges/version/googlesheets)](https://cran.r-project.org/package=googlesheets) ![](http://cranlogs.r-pkg.org/badges/grand-total/googlesheets)
 
@@ -14,31 +24,11 @@ Features:
 -   Access a spreadsheet by its title, key or URL.
 -   Extract data or edit data.
 -   Create | delete | rename | copy | upload | download spreadsheets and worksheets.
+-   Upload local Excel workbook into a Google Sheet and vice versa.
 
 `googlesheets` is inspired by [gspread](https://github.com/burnash/gspread), a Google Spreadsheets Python API
 
 The exuberant prose in this README is inspired by [Tabletop.js](https://github.com/jsoma/tabletop): If you've ever wanted to get data in or out of a Google Spreadsheet from R without jumping through a thousand hoops, welcome home!
-
-#### What the hell do I do with this?
-
-Think of `googlesheets` as a read/write CMS that you (or your less R-obsessed friends) can edit through Google Docs, as well via R. It's like Christmas up in here.
-
-Use a [Google Form](http://www.google.com/forms/about/) to conduct a survey, which populates a Google Sheet.
-
-Gather data while you're in the field in a Google Sheet, maybe [with an iPhone](https://itunes.apple.com/us/app/google-sheets/id842849113?mt=8) or [an Android device](https://play.google.com/store/apps/details?id=com.google.android.apps.docs.editors.sheets&hl=en). Take advantage of [data validation](https://support.google.com/docs/answer/139705?hl=en) to limit the crazy on the way in. You do not have to be online to edit a Google Sheet! Work offline via [the Chrome browser](https://support.google.com/docs/answer/2375012?hl=en), the [Sheets app for Android](https://play.google.com/store/apps/details?id=com.google.android.apps.docs.editors.sheets&hl=en), or the [Sheets app for iOS](https://itunes.apple.com/us/app/google-sheets/id842849113?mt=8).
-
-There are various ways to harvest web data directly into a Google Sheet. For example:
-
--   [This blog post](http://blog.aylien.com/post/114757623598/sentiment-analysis-of-restaurant-reviews) from Aylien.com has a simple example that uses the `=IMPORTXML()` formula to populate a Google Sheet with restaurant reviews and ratings from TripAdvisor.
--   Martin Hawksey offers [TAGS](https://tags.hawksey.info), a free Google Sheet template to setup and run automated collection of search results from Twitter.
--   Martin Hawksey also has a great blog post, [Feeding Google Spreadsheets](https://mashe.hawksey.info/2012/10/feeding-google-spreadsheets-exercises-in-import/), that demonstrates how functions like `importHTML`, `importFeed`, and `importXML` help you get data from the web into a Google Sheet with no programming.
--   Martin Hawksey has another blog post about [feeding a Google Sheet from IFTTT](https://mashe.hawksey.info/2012/09/ifttt-if-i-do-that-on-insert-social-networkrss-feedother-then-add-row-to-google-spreadsheet/). [IFTTT](https://ifttt.com) stands for "if this, then that" and it's "a web-based service that allows users to create chains of simple conditional statements, called 'recipes', which are triggered based on changes to other web services such as Gmail, Facebook, Instagram, and Craigslist" (from [Wikipedia](http://en.wikipedia.org/wiki/IFTTT)).
-
-Use `googlesheets` to get all that data into R.
-
-Use it in a Shiny app! *[Several example apps](inst/shiny-examples) come with the package.*
-
-What other ideas do you have?
 
 ### Install googlesheets
 
@@ -52,12 +42,6 @@ Or you can get the development version from GitHub:
 
 ``` r
 devtools::install_github("jennybc/googlesheets")
-```
-
-If you use Windows, you may want to install the development version of `xml2`. This will improve handling of encoding when reading Sheets:
-
-``` r
-devtools::install_github("hadley/xml2")
 ```
 
 ### Vignettes
@@ -88,10 +72,11 @@ To play nicely with tab completion, we use consistent prefixes:
 
 -   `gs_` = all functions in the package.
 -   `gs_ws_` = all functions that operate on worksheets or tabs within a spreadsheet.
+-   `gd_` = something to do with Google Drive, usually has a `gs_` synonym, might one day migrate to a Drive client.
 
 ### Quick demo
 
-First, here's how to get a copy of a Gapminder-based Sheet we publish for practicing and follow along. You'll be sent to the browser to authenticate yourself with Google at this point.
+Here's how to get a copy of a Gapminder-based Sheet we publish for practicing and follow along. You'll be sent to the browser to authenticate yourself with Google at this point.
 
 ``` r
 gs_gap() %>% 
@@ -113,7 +98,7 @@ Here's a registered `googlesheet` object:
 gap
 #>                   Spreadsheet title: Gapminder
 #>                  Spreadsheet author: gspreadr
-#>   Date of googlesheets registration: 2016-03-17 09:52:13 GMT
+#>   Date of googlesheets registration: 2016-06-25 02:05:56 GMT
 #>     Date of last spreadsheet update: 2015-03-23 20:34:08 GMT
 #>                          visibility: private
 #>                         permissions: rw
@@ -153,10 +138,9 @@ str(africa)
 #>  $ pop      : int  9279525 10270856 11000948 12760499 14760787 17152804 20033753 23254956 26298373 29072015 ...
 #>  $ gdpPercap: num  2449 3014 2551 3247 4183 ...
 head(africa)
-#> Source: local data frame [6 x 6]
-#> 
+#> <tibble [6 x 6]>
 #>   country continent  year lifeExp      pop gdpPercap
-#>     (chr)     (chr) (int)   (dbl)    (int)     (dbl)
+#>     <chr>     <chr> <int>   <dbl>    <int>     <dbl>
 #> 1 Algeria    Africa  1952  43.077  9279525  2449.008
 #> 2 Algeria    Africa  1957  45.685 10270856  3013.976
 #> 3 Algeria    Africa  1962  48.303 11000948  2550.817
@@ -181,20 +165,19 @@ gap %>%
           na = c("1962", "1977"), col_types = "cccccc", skip = 1, n_max = 7)
 #> Accessing worksheet titled 'Oceania'.
 #> No encoding supplied: defaulting to UTF-8.
-#> Source: local data frame [7 x 6]
-#> 
+#> <tibble [7 x 6]>
 #>          Z1      Z2    Z3    Z4       Z5       Z6
-#>       (chr)   (chr) (chr) (chr)    (chr)    (chr)
+#>       <chr>   <chr> <chr> <chr>    <chr>    <chr>
 #> 1 Australia Oceania  1952 69.12  8691212  10039.6
 #> 2 Australia Oceania  1957 70.33  9712569 10949.65
-#> 3 Australia Oceania    NA 70.93 10794968 12217.23
+#> 3 Australia Oceania  <NA> 70.93 10794968 12217.23
 #> 4 Australia Oceania  1967  71.1 11872264 14526.12
 #> 5 Australia Oceania  1972 71.93 13177000 16788.63
-#> 6 Australia Oceania    NA 73.49 14074100  18334.2
+#> 6 Australia Oceania  <NA> 73.49 14074100  18334.2
 #> 7 Australia Oceania  1982 74.74 15184200 19477.01
 ```
 
-Create a new Sheet:
+Create a new Sheet from an R object:
 
 ``` r
 iris_ss <- gs_new("iris", input = head(iris, 3), trim = TRUE)
@@ -230,17 +213,16 @@ iris_ss %>%
   gs_read()
 #> Accessing worksheet titled 'Sheet1'.
 #> No encoding supplied: defaulting to UTF-8.
-#> Source: local data frame [4 x 5]
-#> 
+#> <tibble [4 x 5]>
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#>          (chr)       (chr)        (chr)       (chr)   (chr)
+#>          <chr>       <chr>        <chr>       <chr>   <chr>
 #> 1         what          is            a       sepal anyway?
 #> 2          4.9           3          1.4         0.2  setosa
 #> 3          4.7         3.2          1.3         0.2  setosa
 #> 4       sepals     support          the      petals      !!
 ```
 
-Download this precious thing (other formats are possible):
+Download this precious thing as csv (other formats are possible):
 
 ``` r
 iris_ss %>% 
@@ -249,14 +231,34 @@ iris_ss %>%
 #> /Users/jenny/rrr/googlesheets/iris-ish-stuff.csv
 ```
 
-Clean up our mess:
+Download this precious thing as an Excel workbook (other formats are possible):
+
+``` r
+iris_ss %>% 
+  gs_download(to = "iris-ish-stuff.xlsx", overwrite = TRUE)
+#> Sheet successfully downloaded:
+#> /Users/jenny/rrr/googlesheets/iris-ish-stuff.xlsx
+```
+
+Upload a Excel workbook into a new Sheet:
+
+``` r
+gap_xlsx <- gs_upload(system.file("mini-gap", "mini-gap.xlsx",
+                                  package = "googlesheets"))
+#> File uploaded to Google Drive:
+#> /Users/jenny/resources/R/library/googlesheets/mini-gap/mini-gap.xlsx
+#> As the Google Sheet named:
+#> mini-gap
+```
+
+Clean up our mess locally and on Google Drive:
 
 ``` r
 gs_vecdel(c("iris", "Gapminder"))
-file.remove("iris-ish-stuff.csv")
+file.remove(c("iris-ish-stuff.csv", "iris-ish-stuff.xlsx"))
 ```
 
-Remember, [the vignette](https://github.com/jennybc/googlesheets/blob/master/vignettes/basic-usage.md) shows a lot more usage.
+Remember, [the vignette](https://rawgit.com/jennybc/googlesheets/master/vignettes/basic-usage.html) shows a lot more usage.
 
 ### Overview of functions
 
@@ -296,3 +298,28 @@ Remember, [the vignette](https://github.com/jennybc/googlesheets/blob/master/vig
 | gs\_gap()                | Registers a public Gapminder-based Sheet (for practicing) |
 | gs\_gap\_key()           | Key of the Gapminder practice Sheet                       |
 | gs\_gap\_url()           | Browser URL for the Gapminder practice Sheet              |
+
+### What the hell do I do with this?
+
+Think of `googlesheets` as a read/write CMS that you (or your less R-obsessed friends) can edit through Google Docs, as well via R. It's like Christmas up in here.
+
+Use a [Google Form](http://www.google.com/forms/about/) to conduct a survey, which populates a Google Sheet.
+
+-   The `googleformr` package provides an R API for Google Forms, allowing useRs to POST data securely to Google Forms without authentication. On [CRAN](https://cran.r-project.org/package=googleformr) and [GitHub](https://github.com/data-steve/googleformr) (README has lots of info and links to blog posts).
+
+Gather data while you're in the field in a Google Sheet, maybe [with an iPhone](https://itunes.apple.com/us/app/google-sheets/id842849113?mt=8) or [an Android device](https://play.google.com/store/apps/details?id=com.google.android.apps.docs.editors.sheets&hl=en). Take advantage of [data validation](https://support.google.com/docs/answer/139705?hl=en) to limit the crazy on the way in. You do not have to be online to edit a Google Sheet! Work offline via [the Chrome browser](https://support.google.com/docs/answer/2375012?hl=en), the [Sheets app for Android](https://play.google.com/store/apps/details?id=com.google.android.apps.docs.editors.sheets&hl=en), or the [Sheets app for iOS](https://itunes.apple.com/us/app/google-sheets/id842849113?mt=8).
+
+There are various ways to harvest web data directly into a Google Sheet. For example:
+
+-   [IFTTT](https://ifttt.com), which stands for "if this, then that", makes it easy to create recipes in which changes in one web service, such as Gmail or Instagram, trigger another action, such as writing to a Google Sheet.
+    -   Martin Hawksey blog post about [feeding a Google Sheet from IFTTT](https://mashe.hawksey.info/2012/09/ifttt-if-i-do-that-on-insert-social-networkrss-feedother-then-add-row-to-google-spreadsheet/).
+-   `IMPORTXML(), IMPORTHTML(), IMPORTFEED()`: Google Sheets offer functions to populate Sheets based on web data.
+    -   Aylien.com [blog post](http://blog.aylien.com/post/114757623598/sentiment-analysis-of-restaurant-reviews) on using `=IMPORTXML()` to populate a Google Sheet with restaurant reviews and ratings from TripAdvisor.
+    -   Martin Hawksey blog post, [Feeding Google Spreadsheets](https://mashe.hawksey.info/2012/10/feeding-google-spreadsheets-exercises-in-import/), shows how to scrape web data into a Google Sheet with no programming.
+-   Martin Hawksey offers [TAGS](https://tags.hawksey.info), a free Google Sheet template to setup and run automated collection of search results from Twitter.
+
+Use `googlesheets` to get all that data into R.
+
+Use it in a Shiny app! *[Several example apps](inst/shiny-examples) come with the package.*
+
+What other ideas do you have?

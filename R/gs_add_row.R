@@ -43,7 +43,6 @@ gs_add_row <- function(ss, ws = 1, input = '', verbose = TRUE) {
 
   nrows <- nrow(input)
   if (!is.null(nrows) && nrows > 1) {
-
     for (i in seq_len(nrows)) {
       ss <- Recall(ss = ss, ws = ws, input = input[i, ], verbose = verbose)
     }
@@ -59,27 +58,27 @@ gs_add_row <- function(ss, ws = 1, input = '', verbose = TRUE) {
   ## http://stackoverflow.com/questions/11361956/limiting-the-resultset-size-on-a-google-spreadsheets-forms-list-feed
   ## http://stackoverflow.com/questions/27678331/retreive-a-range-of-rows-from-google-spreadsheet-using-list-based-feed-api-and
   the_url <- this_ws$listfeed
-  req <- httr::GET(the_url,
-                   omit_token_if(grepl("public", the_url)),
-                   query = list(`max-results` = 1)) %>%
+  req <- rGET(the_url,
+              omit_token_if(grepl("public", the_url)),
+              query = list(`max-results` = 1)) %>%
     httr::stop_for_status()
   rc <- content_as_xml_UTF8(req)
 
   ns <- xml2::xml_ns_rename(xml2::xml_ns(rc), d1 = "feed")
 
   var_names <- rc %>%
-    xml2::xml_find_one("(//feed:entry)[1]", ns) %>%
+    xml2::xml_find_first("(//feed:entry)[1]", ns) %>%
     xml2::xml_find_all(".//gsx:*", ns) %>%
     xml2::xml_name()
   nc <- length(var_names)
 
-  if(length(input) > nc) {
-    if(verbose) {
+  if (length(input) > nc) {
+    if (verbose) {
       mpf("Input is too long. Only first %d elements will be used.", nc)
     }
     input <- input[seq_len(nc)]
-  } else if(length(input) < nc) {
-    if(verbose) {
+  } else if (length(input) < nc) {
+    if (verbose) {
       message("Input is too short. Padding with empty strings.")
     }
     input <- c(input, rep('', nc - length(input)))
@@ -87,23 +86,24 @@ gs_add_row <- function(ss, ws = 1, input = '', verbose = TRUE) {
   stopifnot(length(input) == nc)
 
   lf_post_link <- rc %>%
-    xml2::xml_find_one("//feed:link[contains(@rel,'2005#post')]", ns) %>%
+    xml2::xml_find_first("//feed:link[contains(@rel,'2005#post')]", ns) %>%
     xml2::xml_attr("href")
 
   child_node_names <- paste("gsx", var_names, sep = ":")
   new_row <-
-    XML::xmlNode("entry",
-                 .children = mapply(XML::xmlNode, child_node_names,
-                                    input,
-                                    SIMPLIFY = FALSE, USE.NAMES = FALSE),
-                 namespaceDefinitions = c("http://www.w3.org/2005/Atom",
-                  gsx = "http://schemas.google.com/spreadsheets/2006/extended"))
+    xml2::xml_new_document() %>%
+    xml2::xml_add_child(
+      "entry",
+      xmlns = "http://www.w3.org/2005/Atom",
+      "xmlns:gsx" = "http://schemas.google.com/spreadsheets/2006/extended"
+    )
+  purrr::walk2(child_node_names, input, ~ xml2::xml_add_child(new_row, .x, .y))
 
   req <- httr::POST(
     lf_post_link,
     google_token(),
     httr::add_headers("Content-Type" = "application/atom+xml"),
-    body = XML::toString.XMLNode(new_row)
+    body = as.character(new_row)
   ) %>%
     httr::stop_for_status()
 

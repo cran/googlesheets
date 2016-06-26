@@ -3,10 +3,9 @@
 #' Export a Google Sheet as a .csv, .pdf, or .xlsx file. You can download a
 #' sheet that you own or a sheet owned by a third party that has been made
 #' accessible via the sharing dialog options. You can download the entire
-#' spreadsheet (.pdf and .xlsx formats) or a single worksheet. This function
-#' calls the \href{https://developers.google.com/drive/v2/reference/}{Google
-#' Drive API}. Note that the current implementation of this function absolutely
-#' requires authorization.
+#' spreadsheet (.pdf and .xlsx formats only) or a single worksheet (all
+#' formats). This function calls the
+#' \href{https://developers.google.com/drive/v2/reference/}{Google Drive API}.
 #'
 #' If the worksheet is unspecified, i.e. if \code{ws = NULL}, then the entire
 #' spreadsheet will be exported (.pdf and xlsx formats) or the first worksheet
@@ -80,14 +79,14 @@ gs_download <-
     stop(mess)
   }
 
-  httr::GET(link, omit_token_if(grepl("public", from$ws_feed)),
-            if (interactive()) httr::progress() else NULL,
-            httr::write_disk(to, overwrite = overwrite))
+  rGET(link, omit_token_if(grepl("public", from$ws_feed)),
+       if (interactive()) httr::progress() else NULL,
+       httr::write_disk(to, overwrite = overwrite))
 
   if (file.exists(to)) {
 
     to <- normalizePath(to)
-    if(verbose) {
+    if (verbose) {
       mpf("Sheet successfully downloaded:\n%s", to)
     }
     return(invisible(to))
