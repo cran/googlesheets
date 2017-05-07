@@ -1,9 +1,9 @@
 Package: googlesheets
 Title: Manage Google Spreadsheets from R
-Version: 0.2.1
+Version: 0.2.2
 Description: Interact with Google Sheets from R.
 Authors@R: c(
-    person("Jennifer", "Bryan", , "jenny@stat.ubc.ca", c("aut", "cre")),
+    person("Jennifer", "Bryan", , "jenny@rstudio.com", c("aut", "cre")),
     person("Joanna", "Zhao", , "joanna.zhao@alumni.ubc.ca", role = "aut")
     )
 URL: https://github.com/jennybc/googlesheets
@@ -16,11 +16,11 @@ Imports: cellranger (>= 1.0.0), dplyr (>= 0.4.2), httr (>= 1.1.0),
         utils, xml2 (>= 1.0.0)
 Suggests: covr, ggplot2, knitr, testthat, rmarkdown, rprojroot
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2016-06-26 06:55:02 UTC; jenny
+Packaged: 2017-05-07 06:39:52 UTC; jenny
 Author: Jennifer Bryan [aut, cre],
   Joanna Zhao [aut]
-Maintainer: Jennifer Bryan <jenny@stat.ubc.ca>
+Maintainer: Jennifer Bryan <jenny@rstudio.com>
 Repository: CRAN
-Date/Publication: 2016-06-26 12:39:37
+Date/Publication: 2017-05-07 07:13:09 UTC

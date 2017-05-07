@@ -1,3 +1,12 @@
+# googlesheets 0.2.2
+
+The motivation for this release is for compatibility with the about-to-be released purrr 0.2.2.1.
+
+  * Update ggplot2 usage to clear warnings about use of deprecated arguments.
+  * Remove all uses of `purrr::dmap()` and friends, which have been removed from purrr.
+  * `gs_upload()` now has an `overwrite` argument. (#285 @omgjens)
+  * Add vignette to show interactive authentication in a non-default browser.
+
 # googlesheets 0.2.1
 
   * `XML` is no longer a dependency.

@@ -143,13 +143,45 @@ test_that("query params work on the list feed", {
 
 test_that("readr parsing params are handled on the list feed", {
 
+  ## FOLLOW THIS ISSUE:
+  ## https://github.com/hadley/readr/issues/517
+  ## I use readr::type_convert() internally and might have to pre-process col
+  ## specs like "cccnnn" myself into one of the longer forms :(
+  ## temporary workaround while I decide what to do
+  cspec <- do.call(readr::cols, as.list(strsplit("cccnnn", "")[[1]]))
   oceania_tweaked <- gap %>%
     gs_read_listfeed(ws = "Oceania",
                      col_names = paste0("VAR", 1:6),
-                     col_types = "cccnnn",
+                     col_types = cspec,
+                     #col_types = "cccnnn",
                      n_max = 5, skip = 1)
   expect_identical(names(oceania_tweaked), paste0("VAR", 1:6))
   expect_equivalent(vapply(oceania_tweaked, class, character(1)),
                     rep(c("character", "numeric"), each = 3))
 
+})
+
+test_that("comment is honored", {
+  ss <- gs_ws_feed(pts_ws_feed)
+  ref <- tibble::tibble(
+    var1 = c(1L, 3L),
+    var2 = c(2L, NA_integer_)
+  )
+  expect_warning(
+    plain_read <- ss %>% gs_read(ws = "comment", comment = "#"),
+    "1 parsing failure."
+  )
+  expect_equal(ref, plain_read)
+
+  expect_warning(
+    csv_read <- ss %>% gs_read_csv(ws = "comment", comment = "#"),
+    "1 parsing failure."
+  )
+  expect_equal(ref, csv_read)
+
+  listfeed_read <- ss %>% gs_read_listfeed(ws = "comment", comment = "#")
+  expect_equal(ref, listfeed_read)
+
+  range_read <- ss %>% gs_read(ws = "comment", comment = "#", range = "A1:B6")
+  expect_equal(ref, range_read)
 })

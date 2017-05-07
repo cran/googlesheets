@@ -33,5 +33,30 @@ test_that("Different file formats can be uploaded", {
 
 })
 
+test_that("Overwrite actually overwrites an existing file", {
+
+  # Reference data
+  before <- tibble::tibble(x = "before")
+  after <- tibble::tibble(x = "after")
+  on.exit(file.remove(c("before.csv", "after.csv")))
+  readr::write_csv(before, "before.csv")
+  readr::write_csv(after, "after.csv")
+
+  target_sheet <-  p_("overwrite_test_sheet")
+  ss <- gs_upload("before.csv", target_sheet)
+  Sys.sleep(1)
+
+  res <- gs_read(ss)
+  expect_identical(res$x[1], "before")
+
+  ss <- gs_upload("after.csv", target_sheet, overwrite = TRUE)
+  Sys.sleep(1)
+
+  res <- gs_read(ss)
+  expect_identical(res$x[1], "after")
+
+})
+
+
 gs_grepdel(TEST, verbose = FALSE)
 gs_deauth(verbose = FALSE)

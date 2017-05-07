@@ -3,7 +3,7 @@
 #' Modify the contents of one or more cells. The cells to be edited are
 #' specified implicitly by a single anchor cell, which will be the upper left
 #' corner of the edited cell region, and the size and shape of the input. If the
-#' input has rectangular shape, i.e. is a data.frame or matrix, then a simiarly
+#' input has rectangular shape, i.e. is a data.frame or matrix, then a similarly
 #' shaped range of cells will be updated. If the input has no dimension, i.e.
 #' it's a vector, then \code{byrow} controls whether edited cells will extend
 #' from the anchor across a row or down a column.
@@ -169,7 +169,7 @@ gs_edit_cells <- function(ss, ws = 1, input = '', anchor = 'A1',
 
 catch_hopeless_input <- function(x) {
 
-  if (x %>% is.recursive() && !(x %>% is.data.frame())) {
+  if (is.recursive(x) && !(is.data.frame(x))) {
     stop(paste("Non-data-frame, list-like objects not suitable as input.",
                "Maybe pre-process it yourself?"))
   }
@@ -178,7 +178,14 @@ catch_hopeless_input <- function(x) {
     stop("Input has more than 2 dimensions.")
   }
 
-  invisible(NULL)
+  if (is.data.frame(x)) {
+    no_dim <- vapply(x, function(x) is.null(dim(x)), logical(1))
+    if (any(!no_dim)) {
+      stop("One or more variables in input are not atomic vector:\n",
+           paste(names(x)[!no_dim]), collapse = "\n")
+    }
+  }
+  invisible()
 }
 
 ## deeply pragmatic function to turn input destined for upload into cells

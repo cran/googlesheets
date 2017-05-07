@@ -4,7 +4,7 @@
 \alias{gs_upload}
 \title{Upload a file and convert it to a Google Sheet}
 \usage{
-gs_upload(file, sheet_title = NULL, verbose = TRUE)
+gs_upload(file, sheet_title = NULL, verbose = TRUE, overwrite = FALSE)
 }
 \arguments{
 \item{file}{path to the file to upload}
@@ -13,6 +13,8 @@ gs_upload(file, sheet_title = NULL, verbose = TRUE)
 then the name of the file will be used}
 
 \item{verbose}{logical; do you want informative messages?}
+
+\item{overwrite}{whether to overwrite an existing Sheet with the same title}
 }
 \description{
 Google supports the following file types to be converted to a Google
@@ -32,4 +34,3 @@ gs_delete(iris_ss)
 }
 
 }
-

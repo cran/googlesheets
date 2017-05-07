@@ -10,6 +10,7 @@
 #' @param sheet_title the title of the spreadsheet; optional, if not specified
 #'   then the name of the file will be used
 #' @template verbose
+#' @param overwrite whether to overwrite an existing Sheet with the same title
 #'
 #' @examples
 #' \dontrun{
@@ -22,7 +23,7 @@
 #' }
 #'
 #' @export
-gs_upload <- function(file, sheet_title = NULL, verbose = TRUE) {
+gs_upload <- function(file, sheet_title = NULL, verbose = TRUE, overwrite = FALSE) {
 
   if (!file.exists(file)) {
     spf("\"%s\" does not exist!", file)
@@ -39,17 +40,27 @@ gs_upload <- function(file, sheet_title = NULL, verbose = TRUE) {
     sheet_title <- file %>% basename() %>% tools::file_path_sans_ext()
   }
 
+  key <- NULL
+  if (overwrite) {
+    existing_sheet <- gs_ls(sheet_title, fixed = TRUE, verbose = FALSE)
+    if (!is.null(existing_sheet)) {
+      key <- existing_sheet$sheet_key[1]
+    }
+  }
+
   ## upload metadata --> get a fileId (Drive-speak) or key (Sheets-speak)
-  the_body <- list(title = sheet_title,
-                   mimeType = "application/vnd.google-apps.spreadsheet")
-  req <- httr::POST(.state$gd_base_url_files_v2, google_token(),
-                    body = the_body, encode = "json") %>%
-    httr::stop_for_status()
-  rc <- content_as_json_UTF8(req)
-  new_key <- rc$id
+  if (is.null(key)) {
+    the_body <- list(title = sheet_title,
+                     mimeType = "application/vnd.google-apps.spreadsheet")
+    req <- httr::POST(.state$gd_base_url_files_v2, google_token(),
+                      body = the_body, encode = "json") %>%
+      httr::stop_for_status()
+    rc <- content_as_json_UTF8(req)
+    key <- rc$id
+  }
 
   ## the actual file upload
-  the_url <- file.path(.state$gd_base_url, "upload/drive/v2/files", new_key)
+  the_url <- file.path(.state$gd_base_url, "upload/drive/v2/files", key)
   the_url <-
     httr::modify_url(the_url,
                      query = list(uploadType = "media", convert = TRUE))
@@ -57,8 +68,8 @@ gs_upload <- function(file, sheet_title = NULL, verbose = TRUE) {
     httr::stop_for_status()
   rc <- content_as_json_UTF8(req)
 
-  ss_df <- gs_ls()
-  success <- new_key %in% ss_df$sheet_key
+  uploaded_sheet <- gs_ls(sheet_title, fixed = TRUE)
+  success <- key == uploaded_sheet$sheet_key[1]
 
   if (success) {
     if (verbose) {
@@ -70,7 +81,7 @@ gs_upload <- function(file, sheet_title = NULL, verbose = TRUE) {
     spf("Cannot confirm the file upload :(")
   }
 
-  new_key %>%
+  key %>%
     gs_key(verbose = FALSE) %>%
     invisible()
 

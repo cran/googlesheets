@@ -65,6 +65,19 @@ gs_reshape_feed <- function(x, ddd, verbose = TRUE) {
     dplyr::arrange_(~row, ~col)
   n_cols <- dplyr::n_distinct(x$col)
 
+  if (!is.null(ddd$comment)) {
+    x <- x %>%
+      dplyr::mutate_(noncomment = ~ !grepl(paste0("^", ddd$comment), value)) %>%
+      dplyr::group_by_(~ row)
+    keep_these_rows <- x %>%
+      dplyr::mutate_(precomment = ~ dplyr::cumall(noncomment)) %>%
+      dplyr::count_(vars = c("row", "precomment")) %>%
+      dplyr::filter_(~ precomment, ~ (n > 0))
+    x[!x$noncomment, "value"] <- NA_character_
+    x <- x[x$row %in% keep_these_rows$row, , drop = FALSE]
+    x$noncomment <- NULL
+  }
+
   if (isTRUE(ddd$col_names)) {
     row_min <- min(x$row)
     row_one <- x %>%
@@ -100,13 +113,6 @@ gs_reshape_feed <- function(x, ddd, verbose = TRUE) {
     as.data.frame(stringsAsFactors = FALSE) %>%
     dplyr::as_data_frame()
 
-  if (!is.null(ddd$comment)) {
-    keep_row <- !grepl(paste0("^", ddd$comment), dat[[1]])
-    dat <- dat[keep_row, , drop = FALSE]
-    dat <- dat %>%
-      purrr::dmap(~stringr::str_replace(.x, paste0(ddd$comment, ".*"), ""))
-  }
-
   if (!is.null(ddd$n_max)) {
     dat <- dat[seq_len(ddd$n_max), , drop = FALSE]
   }
@@ -118,7 +124,6 @@ gs_reshape_feed <- function(x, ddd, verbose = TRUE) {
   ## our departures from readr data ingest:
   ## ~~no NA variable names~~ handled elsewhere (above) in this function
   ## NA vars should be logical, not character
-  df %>%
-    purrr::dmap(force_na_type)
-
+  df[] <- lapply(df, function(.x) if (all(is.na(.x))) as.logical(.x) else .x)
+  df
 }
