@@ -84,12 +84,14 @@ test_that("We can simplify data from the cell feed", {
 
   foo <- gap %>%
     gs_read_cellfeed(ws = "Africa", range = cell_rows(2:3), verbose = FALSE)
-  expect_equal_to_reference(foo %>% gs_simplify_cellfeed(),
-                            "for_reference/gap_africa_simplify_A1.rds")
+  expect_equal_to_reference(
+    foo %>% gs_simplify_cellfeed(),
+    test_path("for_reference/gap_africa_simplify_A1.rds")
+  )
   expect_equal_to_reference(
     foo %>% gs_simplify_cellfeed(notation = "R1C1"),
-    "for_reference/gap_africa_simplify_R1C1.rds"
-    )
+    test_path("for_reference/gap_africa_simplify_R1C1.rds")
+  )
 
   foo <- gap %>%
     gs_read_cellfeed(ws = "Oceania", range = cell_cols(3), verbose = FALSE)
@@ -101,7 +103,8 @@ test_that("We can simplify data from the cell feed", {
   expect_is(foo_simple2, "character")
 
   foo_simple3 <- foo %>% gs_simplify_cellfeed(col_names = TRUE)
-  expect_is(foo_simple3, "integer")
+  ## type depends on readr, which has met difficulties updating on CRAN
+  expect_is(foo_simple3, c("numeric", "integer"))
 
   foo_simple4 <- foo %>% gs_simplify_cellfeed(convert = FALSE)
   expect_equivalent(foo_simple4,
@@ -111,8 +114,8 @@ test_that("We can simplify data from the cell feed", {
   yo <- gap %>%
     gs_read_cellfeed(ws = "Oceania", range = cell_cols(3), verbose = FALSE)
   yo_simple <- yo %>% gs_simplify_cellfeed(convert = TRUE)
-  expect_is(yo_simple, "integer")
-
+  ## type depends on readr, which has met difficulties updating on CRAN
+  expect_is(yo_simple, c("numeric", "integer"))
 })
 
 test_that("Validation is in force for row / columns limits in the cell feed", {
@@ -137,8 +140,14 @@ test_that("query params work on the list feed", {
                      reverse = TRUE, orderby = "gdppercap",
                      sq = "lifeexp > 79 or year < 1960",
                      verbose = FALSE)
-  expect_equal_to_reference(oceania_fancy,
-                            "for_reference/gap_oceania_listfeed_query.rds")
+
+  ## type depends on readr, which has met difficulties updating on CRAN
+  oceania_fancy <- dplyr::select(oceania_fancy, -year, -pop)
+
+  expect_equal_to_reference(
+    oceania_fancy,
+    test_path("for_reference/gap_oceania_listfeed_query.rds")
+  )
 })
 
 test_that("readr parsing params are handled on the list feed", {
@@ -162,10 +171,11 @@ test_that("readr parsing params are handled on the list feed", {
 })
 
 test_that("comment is honored", {
+  skip("Subject to type discrepancies due to readr version.")
   ss <- gs_ws_feed(pts_ws_feed)
-  ref <- tibble::tibble(
-    var1 = c(1L, 3L),
-    var2 = c(2L, NA_integer_)
+  ref <- dplyr::data_frame(
+    var1 = c(1, 3),
+    var2 = c(2, NA_real_)
   )
   expect_warning(
     plain_read <- ss %>% gs_read(ws = "comment", comment = "#"),
